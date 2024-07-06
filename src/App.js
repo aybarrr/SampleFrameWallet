@@ -14,12 +14,9 @@ const tg = window.Telegram.WebApp;
   const [tokenAmount, setTokenAmount] = useState('');
   const [tokenRecipient, setTokenRecipient] = useState('');
 
- new EvmConnector('https://t.me/sample_framer_w_bot/walletSample')
-
   useEffect(() => {
     const ui_evm = new EvmConnectorUI({
       buttonId: 'connect-wallet',
-      app_link: 'https://t.me/sample_framer_w_bot/walletSample',
       successTxClb:  (hash)=>{
               alert('Transaction successful: '+ hash)
           }
