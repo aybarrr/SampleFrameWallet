@@ -1,7 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
 import './App.css'; 
-import {EvmConnector} from 'evm-connector-reframe'
 import { EvmConnectorUI} from 'evm-connector-reframe'
 
 function App() {
@@ -13,6 +12,7 @@ const tg = window.Telegram.WebApp;
   const [tokenAddress, setTokenAddress] = useState('');
   const [tokenAmount, setTokenAmount] = useState('');
   const [tokenRecipient, setTokenRecipient] = useState('');
+  const [selectedChain, setSelectedChain] = useState('Ethereum');
 
   useEffect(() => {
     const ui_evm = new EvmConnectorUI({
@@ -32,12 +32,17 @@ const tg = window.Telegram.WebApp;
     evmWallet.transferToken(tokenAddress, addres, tokenAmount)
    }
 
+    const handleChainChange = (e) => {
+      setSelectedChain(e.target.value);
+    }
+
   return (
     <div className="app">
       <div className="wallet-container">
         <div className="logo-container">
           <img src="base-logo.png" alt="Chain Logo" className="chain-logo" />
         </div>
+     
         <h1 className="title">Frame Wallet Sample</h1>
         <p className="subtitle">Connect your Frame Wallet:</p>
         <button className="connect-button" id='connect-wallet'>Connect Wallet</button>
@@ -48,7 +53,16 @@ const tg = window.Telegram.WebApp;
           <button className="send-button" onClick={simpleSend}>Send</button>
         </div>
         <div className="send-eth-container">
-          <p className="send-eth-title">Send ERC20 Token:</p>
+          <p className="send-eth-title">Send ERC20 Token on the selected chain:</p>
+          <div>
+        <select value={selectedChain} onChange={handleChainChange}>
+        <option value="Ethereum">Ethereum</option>
+        <option value="Binance Smart Chain">Binance Smart Chain</option>
+        <option value="Base">Base</option>
+        <option value="Polygon">Polygon</option>
+        <option value="Arbitrum">Arbitrum</option>
+      </select>
+        </div>
           <input type="text" placeholder="Token Address" onChange={(e)=>setTokenAddress(e.target.value)} className="input-field" />
           <input type="text" placeholder="Recipient Address" onChange={(e)=>setTokenRecipient(e.target.value)} className="input-field" />
           <input type="text" placeholder="Amount" onChange={(e) => setTokenAmount(e.target.value)} className="input-field" />
